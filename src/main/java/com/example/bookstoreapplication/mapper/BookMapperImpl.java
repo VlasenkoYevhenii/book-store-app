@@ -6,7 +6,7 @@ import com.example.bookstoreapplication.model.Book;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BookMapperImpl implements BookMapper{
+public class BookMapperImpl implements BookMapper {
     @Override
     public BookDto toDto(Book book) {
         BookDto dto = new BookDto();

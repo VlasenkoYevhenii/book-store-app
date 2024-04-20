@@ -6,13 +6,8 @@ import com.example.bookstoreapplication.mapper.BookMapper;
 import com.example.bookstoreapplication.model.Book;
 import com.example.bookstoreapplication.repository.BookRepository;
 import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +18,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto save(CreateBookRequestDto dto) {
         Book book = mapper.toModel(dto);
-        bookRepository.save(book);
-        return mapper.toDto(book);
+        return mapper.toDto(bookRepository.save(book));
     }
 
     @Override

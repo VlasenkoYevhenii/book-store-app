@@ -1,16 +1,13 @@
 package com.example.bookstoreapplication.repository;
 
-import com.example.bookstoreapplication.dto.BookDto;
-import com.example.bookstoreapplication.mapper.BookMapper;
 import com.example.bookstoreapplication.model.Book;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
