@@ -1,9 +1,11 @@
 package com.example.bookstoreapplication.repository;
 
+import com.example.bookstoreapplication.exception.EntityNotFoundException;
 import com.example.bookstoreapplication.model.Book;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -44,10 +46,13 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public Book getById(Long id) {
         try (EntityManager entityManager = factory.createEntityManager()) {
-            TypedQuery<Book> query = entityManager.createQuery("FROM Book b "
-                        + "WHERE b.id =:id", Book.class);
-            query.setParameter("id",id);
+            TypedQuery<Book> query = entityManager.createQuery("FROM Book b WHERE b.id = :id",
+                    Book.class);
+            query.setParameter("id", id);
             return query.getSingleResult();
+        } catch (NoResultException e) {
+            throw new EntityNotFoundException("Failed to get book by id = " + id);
         }
     }
+
 }
