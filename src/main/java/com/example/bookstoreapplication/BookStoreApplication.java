@@ -2,12 +2,13 @@ package com.example.bookstoreapplication;
 
 import com.example.bookstoreapplication.model.Book;
 import com.example.bookstoreapplication.service.BookService;
-import java.math.BigDecimal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.math.BigDecimal;
 
 @SpringBootApplication
 public class BookStoreApplication {
@@ -21,7 +22,7 @@ public class BookStoreApplication {
     @Bean
     public CommandLineRunner commandLineRunner() {
         return args -> {
-            System.out.println("run method was called");
+            System.out.println("--RUN-- method was called");
 
             Book book = new Book();
             book.setTitle("title");
@@ -31,6 +32,7 @@ public class BookStoreApplication {
 
             bookService.save(book);
             System.out.println(bookService.findAll());
+            System.out.println(book);
         };
     }
 

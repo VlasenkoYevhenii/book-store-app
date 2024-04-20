@@ -1,42 +1,43 @@
 package com.example.bookstoreapplication.repository;
 
 import com.example.bookstoreapplication.model.Book;
-import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public class BookRepositoryImpl implements BookRepository {
-    private final SessionFactory sessionFactory;
+import java.util.List;
 
-    @Autowired
-    public BookRepositoryImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+@Repository
+@RequiredArgsConstructor
+public class BookRepositoryImpl implements BookRepository {
+
+    private final EntityManagerFactory factory;
 
     @Override
     public Book save(Book book) {
-        Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
-            session.persist(book);
+        EntityManager manager;
+        EntityTransaction transaction = null;
+        try {
+            manager = factory.createEntityManager();
+            transaction = manager.getTransaction();
+            transaction.begin();
+            manager.persist(book);
             transaction.commit();
             return book;
         } catch (Exception e) {
-            if (transaction != null) {
+            if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
-            throw new RuntimeException("failed to save book " + book, e);
+            throw new RuntimeException("Failed to save book " + book, e);
         }
     }
 
     @Override
     public List<Book> findAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Book", Book.class).getResultList();
+        try (EntityManager entityManager = factory.createEntityManager()) {
+            return entityManager.createQuery("from Book", Book.class).getResultList();
         }
     }
 }
