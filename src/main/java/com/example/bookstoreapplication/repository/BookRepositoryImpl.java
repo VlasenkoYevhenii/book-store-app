@@ -6,6 +6,7 @@ import com.example.bookstoreapplication.model.Book;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -39,7 +40,17 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public List<Book> findAll() {
         try (EntityManager entityManager = factory.createEntityManager()) {
-            return entityManager.createQuery("from Book", Book.class).getResultList();
+            return entityManager.createQuery("FROM Book", Book.class).getResultList();
+        }
+    }
+
+    @Override
+    public Book getById(Long id) {
+        try (EntityManager entityManager = factory.createEntityManager()) {
+            TypedQuery<Book> query = entityManager.createQuery("FROM Book b "
+                        + "WHERE b.id =:id", Book.class);
+            query.setParameter("id",id);
+            return query.getSingleResult();
         }
     }
 }
