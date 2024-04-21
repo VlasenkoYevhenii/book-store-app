@@ -1,15 +1,11 @@
 package com.example.bookstoreapplication.repository;
 
-import com.example.bookstoreapplication.exception.EntityNotFoundException;
 import com.example.bookstoreapplication.model.Book;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
