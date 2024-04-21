@@ -8,6 +8,8 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
+import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -44,15 +46,9 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public Book getById(Long id) {
+    public Optional<Book> getById(Long id) {
         try (EntityManager entityManager = factory.createEntityManager()) {
-            TypedQuery<Book> query = entityManager.createQuery("FROM Book b WHERE b.id = :id",
-                    Book.class);
-            query.setParameter("id", id);
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            throw new EntityNotFoundException("Failed to get book by id = " + id);
+            return Optional.ofNullable(entityManager.find(Book.class, id));
         }
     }
-
 }
