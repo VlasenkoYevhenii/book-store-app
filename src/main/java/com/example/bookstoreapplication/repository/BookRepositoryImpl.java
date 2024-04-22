@@ -1,5 +1,6 @@
 package com.example.bookstoreapplication.repository;
 
+import com.example.bookstoreapplication.exception.DataProcessingException;
 import com.example.bookstoreapplication.model.Book;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -45,6 +46,8 @@ public class BookRepositoryImpl implements BookRepository {
     public Optional<Book> getById(Long id) {
         try (EntityManager entityManager = factory.createEntityManager()) {
             return Optional.ofNullable(entityManager.find(Book.class, id));
+        } catch (Exception e) {
+            throw new DataProcessingException("Failed to get book by id" + id, e);
         }
     }
 }
