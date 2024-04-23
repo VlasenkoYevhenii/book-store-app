@@ -2,7 +2,6 @@ package com.example.bookstoreapplication.controller;
 
 import com.example.bookstoreapplication.dto.BookDto;
 import com.example.bookstoreapplication.dto.CreateBookRequestDto;
-import com.example.bookstoreapplication.model.Book;
 import com.example.bookstoreapplication.service.BookService;
 import jakarta.validation.Valid;
 import java.util.List;
