@@ -38,6 +38,7 @@ public class BookController {
         return bookService.save(dto);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     public BookDto updateBook(@PathVariable Long id, @RequestBody CreateBookRequestDto dto) {
         return bookService.updateBook(id, dto);

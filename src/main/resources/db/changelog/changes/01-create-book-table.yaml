@@ -12,7 +12,6 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
-                    nullable: false
               - column:
                   name: title
                   type: VARCHAR(255)
@@ -22,7 +21,7 @@ databaseChangeLog:
                   name: author
                   type: VARCHAR(255)
                   constraints:
-                    unique: true
+                    nullable: false
               - column:
                   name: isbn
                   type: VARCHAR(255)
