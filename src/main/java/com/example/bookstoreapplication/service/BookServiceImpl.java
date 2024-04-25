@@ -7,9 +7,8 @@ import com.example.bookstoreapplication.exception.EntityNotFoundException;
 import com.example.bookstoreapplication.mapper.BookMapper;
 import com.example.bookstoreapplication.model.Book;
 import com.example.bookstoreapplication.repository.book.BookRepository;
-import java.util.List;
-
 import com.example.bookstoreapplication.repository.book.BookSpecificationBuilder;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -54,11 +53,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> search(BookSearchParameters params) {
-            Specification<Book> spec = specificationBuilder.build(params);
-            return bookRepository
-                    .findAll(spec)
-                    .stream()
-                    .map(mapper::toDto)
-                    .toList();
+        Specification<Book> spec = specificationBuilder.build(params);
+        return bookRepository
+                .findAll(spec)
+                .stream()
+                .map(mapper::toDto)
+                .toList();
     }
 }
