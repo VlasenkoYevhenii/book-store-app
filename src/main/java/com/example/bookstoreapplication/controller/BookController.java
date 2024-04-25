@@ -1,6 +1,7 @@
 package com.example.bookstoreapplication.controller;
 
 import com.example.bookstoreapplication.dto.BookDto;
+import com.example.bookstoreapplication.dto.BookSearchParameters;
 import com.example.bookstoreapplication.dto.CreateBookRequestDto;
 import com.example.bookstoreapplication.service.BookService;
 import jakarta.validation.Valid;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,5 +50,12 @@ public class BookController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         bookService.delete(id);
+    }
+
+    @GetMapping("/search")
+    public List<BookDto> search(@RequestParam(required = false) String[] titles,
+                                @RequestParam(required = false) String[] authors) {
+        BookSearchParameters searchParameters = new BookSearchParameters(titles, authors);
+        return bookService.search(searchParameters);
     }
 }
