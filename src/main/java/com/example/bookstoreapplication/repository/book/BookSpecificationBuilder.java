@@ -9,11 +9,12 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import static com.example.bookstoreapplication.repository.book.spec.AuthorSpecificationProvider.AUTHOR_KEY;
+import static com.example.bookstoreapplication.repository.book.spec.TitleSpecificationProvider.TITLE_KEY;
+
 @RequiredArgsConstructor
 @Component
 public class BookSpecificationBuilder implements SpecificationBuilder<Book> {
-    private static final String TITLE_KEY = "title";
-    private static final String AUTHOR_KEY = "title";
     private final SpecificationProviderManager<Book> providerManager;
 
     @Override
