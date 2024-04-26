@@ -53,9 +53,7 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public List<BookDto> search(@RequestParam(required = false) String[] titles,
-                                @RequestParam(required = false) String[] authors) {
-        BookSearchParameters searchParameters = new BookSearchParameters(titles, authors);
-        return bookService.search(searchParameters);
+    public List<BookDto> search(BookSearchParameters params) {
+        return bookService.search(params);
     }
 }

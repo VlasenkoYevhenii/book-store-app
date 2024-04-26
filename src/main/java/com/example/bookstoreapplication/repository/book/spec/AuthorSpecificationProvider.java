@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class AuthorSpecificationProvider implements SpecificationProvider<Book> {
     private static final String AUTHOR_KEY = "author";
 
+    @Override
     public Specification<Book> getSpecification(String[] params) {
         return ((root, query, criteriaBuilder)
                     -> root.get(AUTHOR_KEY).in(Arrays.stream(params).toArray()));
