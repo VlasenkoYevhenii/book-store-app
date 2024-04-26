@@ -2,7 +2,6 @@ package com.example.bookstoreapplication.repository.book.spec;
 
 import com.example.bookstoreapplication.model.Book;
 import com.example.bookstoreapplication.repository.SpecificationProvider;
-import java.util.Arrays;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +11,13 @@ public class TitleSpecificationProvider implements SpecificationProvider<Book> {
 
     @Override
     public Specification<Book> getSpecification(String[] params) {
-        return ((root, query, criteriaBuilder)
-                    -> root.get(TITLE_KEY).in(Arrays.stream(params).toArray()));
+        return (root, query, criteriaBuilder) -> {
+            String searchString = params[0];
+            return criteriaBuilder.like(
+                    criteriaBuilder.lower(root.get(TITLE_KEY)),
+                    "%" + searchString.toLowerCase() + "%"
+            );
+        };
     }
 
     @Override
