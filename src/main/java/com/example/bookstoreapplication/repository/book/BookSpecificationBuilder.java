@@ -1,5 +1,8 @@
 package com.example.bookstoreapplication.repository.book;
 
+import static com.example.bookstoreapplication.repository.book.spec.AuthorSpecificationProvider.AUTHOR_KEY;
+import static com.example.bookstoreapplication.repository.book.spec.TitleSpecificationProvider.TITLE_KEY;
+
 import com.example.bookstoreapplication.dto.BookSearchParameters;
 import com.example.bookstoreapplication.model.Book;
 import com.example.bookstoreapplication.repository.SpecificationBuilder;
@@ -8,9 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-
-import static com.example.bookstoreapplication.repository.book.spec.AuthorSpecificationProvider.AUTHOR_KEY;
-import static com.example.bookstoreapplication.repository.book.spec.TitleSpecificationProvider.TITLE_KEY;
 
 @RequiredArgsConstructor
 @Component
