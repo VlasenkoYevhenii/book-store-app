@@ -2,7 +2,9 @@ package com.example.bookstoreapplication.repository.book.spec;
 
 import com.example.bookstoreapplication.model.Book;
 import com.example.bookstoreapplication.repository.SpecificationProvider;
-import java.util.Arrays;
+import jakarta.persistence.criteria.Predicate;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +14,18 @@ public class AuthorSpecificationProvider implements SpecificationProvider<Book> 
 
     @Override
     public Specification<Book> getSpecification(String[] params) {
-        return ((root, query, criteriaBuilder)
-                    -> root.get(AUTHOR_KEY).in(Arrays.stream(params).toArray()));
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            for (String searchString : params) {
+                String lowercaseSearchString = searchString.toLowerCase();
+                Predicate likePredicate = criteriaBuilder.like(
+                        criteriaBuilder.lower(root.get(AUTHOR_KEY)),
+                        "%" + lowercaseSearchString + "%"
+                );
+                predicates.add(likePredicate);
+            }
+            return criteriaBuilder.or(predicates.toArray(new Predicate[0]));
+        };
     }
 
     @Override
