@@ -40,13 +40,22 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(body, headers, status);
     }
 
-    @ExceptionHandler({DataProcessingException.class, EntityNotFoundException.class})
-    protected ResponseEntity<Object> handleCustomException(Exception ex) {
+    @ExceptionHandler({EntityNotFoundException.class})
+    protected ResponseEntity<Object> handleEntityNotFoundException(Exception ex) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put(TIMESTAMP, LocalDateTime.now());
-        body.put(STATUS, HttpStatus.BAD_REQUEST);
+        body.put(STATUS, HttpStatus.NOT_FOUND);
         body.put(MESSAGE, ex.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({DataProcessingException.class})
+    protected ResponseEntity<Object> handleDataProcessingException(Exception ex) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put(TIMESTAMP, LocalDateTime.now());
+        body.put(STATUS, HttpStatus.INTERNAL_SERVER_ERROR);
+        body.put(MESSAGE, ex.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private String getErrorMessage(ObjectError object) {
