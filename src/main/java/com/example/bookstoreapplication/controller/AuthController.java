@@ -6,6 +6,7 @@ import com.example.bookstoreapplication.exception.RegistrationException;
 import com.example.bookstoreapplication.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Register new user",
                 description = "Registers a user if it's not registered yet")
-    public UserResponseDto register(@RequestBody UserRegistrationRequestDto dto)
+    public UserResponseDto register(@Valid @RequestBody UserRegistrationRequestDto dto)
                 throws RegistrationException {
         return service.register(dto);
     }

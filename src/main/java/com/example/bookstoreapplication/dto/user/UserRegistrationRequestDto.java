@@ -1,11 +1,14 @@
 package com.example.bookstoreapplication.dto.user;
 
+import com.example.bookstoreapplication.fieldvalidator.FieldMatch;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 @Data
+@FieldMatch(first = "password", second = "repeatPassword",
+        message = "Repeated password must match the password")
 public class UserRegistrationRequestDto {
     @NotBlank(message = "Please add your email")
     @Email(message = "Incorrect email pattern")
