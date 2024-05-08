@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     private boolean isRegistered(String email) {
         User user;
-        user = repository.findByEmail(email);
+        user = repository.findByEmail(email).orElse(null);
         return user != null;
     }
 }
