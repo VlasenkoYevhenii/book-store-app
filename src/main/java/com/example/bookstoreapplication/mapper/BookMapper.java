@@ -1,8 +1,8 @@
 package com.example.bookstoreapplication.mapper;
 
 import com.example.bookstoreapplication.config.MapperConfig;
-import com.example.bookstoreapplication.dto.BookDto;
-import com.example.bookstoreapplication.dto.CreateBookRequestDto;
+import com.example.bookstoreapplication.dto.book.BookDto;
+import com.example.bookstoreapplication.dto.book.CreateBookRequestDto;
 import com.example.bookstoreapplication.model.Book;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
