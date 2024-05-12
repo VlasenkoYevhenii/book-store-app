@@ -15,12 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.awt.desktop.UserSessionListener;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/auth")
 @Tag(name = "Users", description = "Users authentication and login operations")
 public class AuthController {
     private final UserService service;
+
+    @PostMapping("login")
+    public UserLoginResponseDto login(UserLoginRequestDto dto) {
+        return null;
+    }
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.CREATED)
