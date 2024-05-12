@@ -1,5 +1,6 @@
 package com.example.bookstoreapplication.controller;
 
+import com.example.bookstoreapplication.dto.user.UserLoginRequestDto;
 import com.example.bookstoreapplication.dto.user.UserRegistrationRequestDto;
 import com.example.bookstoreapplication.dto.user.UserResponseDto;
 import com.example.bookstoreapplication.exception.RegistrationException;
