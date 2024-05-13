@@ -30,7 +30,7 @@ public class AuthController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Login endpoint",
                 description = "Returns JWT token in response")
-    public UserLoginResponseDto login(UserLoginRequestDto dto) {
+    public UserLoginResponseDto login(@RequestBody UserLoginRequestDto dto) {
         return authenticationService.authenticate(dto);
     }
 
