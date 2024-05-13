@@ -7,8 +7,10 @@ import com.example.bookstoreapplication.model.Category;
 import com.example.bookstoreapplication.repository.category.CategoryRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
+@Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository repository;
     private final CategoryMapper mapper;
