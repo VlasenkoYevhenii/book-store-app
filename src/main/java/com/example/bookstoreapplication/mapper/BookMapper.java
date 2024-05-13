@@ -6,12 +6,11 @@ import com.example.bookstoreapplication.dto.book.BookDtoWithoutCategoryIds;
 import com.example.bookstoreapplication.dto.book.CreateBookRequestDto;
 import com.example.bookstoreapplication.model.Book;
 import com.example.bookstoreapplication.model.Category;
+import java.util.Set;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.ReportingPolicy;
-
-import java.util.Set;
 
 @Mapper(config = MapperConfig.class, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface BookMapper {

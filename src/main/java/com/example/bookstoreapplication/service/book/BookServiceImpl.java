@@ -70,4 +70,5 @@ public class BookServiceImpl implements BookService {
                 .stream()
                 .map(mapper::toDtoWithoutCategoryIds)
                 .toList();
-    }}
+    }
+}

@@ -4,9 +4,9 @@ import com.example.bookstoreapplication.dto.book.BookDtoWithoutCategoryIds;
 import com.example.bookstoreapplication.dto.category.CategoryDto;
 import com.example.bookstoreapplication.service.book.BookService;
 import com.example.bookstoreapplication.service.category.CategoryService;
-import java.util.List;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,7 +31,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Category creation",
                 description = "Add new category to the DB(ADMIN only")
-    public CategoryDto createCategory(CategoryDto dto){
+    public CategoryDto createCategory(CategoryDto dto) {
         return categoryService.save(dto);
     }
 
@@ -71,7 +71,8 @@ public class CategoryController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "Get books by category id",
                 description = "Retrieves all books by category id")
-    public List<BookDtoWithoutCategoryIds> getBooksByCategoryId(@PathVariable Long id, Pageable pageable) {
+    public List<BookDtoWithoutCategoryIds> getBooksByCategoryId(@PathVariable Long id,
+                                                                Pageable pageable) {
         return bookService.getBookDtosByCategoryId(id, pageable);
     }
 }

@@ -29,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto save(CategoryDto dto) {
-        Category newCategory =  repository.save(mapper.toModel(dto));
+        Category newCategory = repository.save(mapper.toModel(dto));
         return mapper.toDto(newCategory);
     }
 
