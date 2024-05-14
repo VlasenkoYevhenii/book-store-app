@@ -27,9 +27,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto register(UserRegistrationRequestDto requestDto)
             throws RegistrationException {
-        if (isRegistered(requestDto.getEmail())) {
-            throw new RegistrationException(EXCEPTION);
-        }
+        checkExistsByEmail(requestDto.getEmail());
         User user = mapper.toModel(requestDto);
         user.setPassword(encoder.encode(requestDto.getPassword()));
         Optional<Role> userRoleOpt = roleRepository.findById(USER_ROLE_ID);
@@ -42,9 +40,9 @@ public class UserServiceImpl implements UserService {
         return mapper.toDto(savedUser);
     }
 
-    private boolean isRegistered(String email) {
-        User user;
-        user = userRepository.findByEmail(email).orElse(null);
-        return user != null;
+    private void checkExistsByEmail(String email) throws RegistrationException {
+        if (userRepository.findByEmail(email).isEmpty()) {
+            throw new RegistrationException(EXCEPTION);
+        }
     }
 }
