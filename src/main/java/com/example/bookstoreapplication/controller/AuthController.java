@@ -30,16 +30,16 @@ public class AuthController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Login endpoint",
                 description = "Returns JWT token in response")
-    public UserLoginResponseDto login(@RequestBody UserLoginRequestDto dto) {
-        return authenticationService.authenticate(dto);
+    public UserLoginResponseDto login(@RequestBody UserLoginRequestDto request) {
+        return authenticationService.authenticate(request);
     }
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Register new user",
                 description = "Registers a user if it's not registered yet")
-    public UserResponseDto register(@Valid @RequestBody UserRegistrationRequestDto dto)
+    public UserResponseDto register(@Valid @RequestBody UserRegistrationRequestDto request)
                 throws RegistrationException {
-        return userService.register(dto);
+        return userService.register(request);
     }
 }
