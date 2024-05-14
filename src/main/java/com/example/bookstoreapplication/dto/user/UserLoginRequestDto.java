@@ -12,6 +12,6 @@ public class UserLoginRequestDto {
     private String email;
 
     @NotBlank(message = "The password field is empty")
-    @Length(min = 6)
+    @Length(min = 6, max = 16)
     private String password;
 }
