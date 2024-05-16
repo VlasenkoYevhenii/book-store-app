@@ -30,8 +30,8 @@ public class ShoppingCartController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
-    @Operation(summary = "Get a shoppingCart",
-            description = "Endpoint for getting user's shoppingCart from the db")
+    @Operation(summary = "Get the shoppingCart",
+            description = "Endpoint for getting user's shoppingCart from DB")
     @ResponseStatus(HttpStatus.OK)
     public ShoppingCartResponseDto getShoppingCart(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
@@ -54,7 +54,7 @@ public class ShoppingCartController {
     @PutMapping("/cart-items/{cartItemId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update books quantity",
-            description = "Endpoint for updating books quantity in the db")
+            description = "Endpoint for updating books quantity in the shopping cart")
     public ShoppingCartResponseDto updateBookQuantity(@PathVariable Long cartItemId,
                                                       Authentication authentication,
                                                       CartItemUpdateDto updateDto) {
@@ -65,7 +65,7 @@ public class ShoppingCartController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/cart-items/{cartItemId}")
     @Operation(summary = "Delete a cartItem",
-            description = "Endpoint for deleting a cartItem from the db")
+            description = "Endpoint for deleting a cart item DB")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeBookFromCart(@PathVariable Long cartItemId, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
