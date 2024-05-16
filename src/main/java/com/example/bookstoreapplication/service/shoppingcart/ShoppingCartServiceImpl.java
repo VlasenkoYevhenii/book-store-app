@@ -48,8 +48,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return cartMapper.toDto(shoppingCart);
     }
 
-
-
     @Override
     public void removeBookFromCart(Long userId, Long cartItemId) {
         ShoppingCart shoppingCart = cartRepository.findShoppingCartByUserId(userId);
