@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void checkExistsByEmail(String email) throws RegistrationException {
-        if (userRepository.findByEmail(email).isEmpty()) {
+        if (!userRepository.findByEmail(email).isEmpty()) {
             throw new RegistrationException(EXCEPTION);
         }
     }
