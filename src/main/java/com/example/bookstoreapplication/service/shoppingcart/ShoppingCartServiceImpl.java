@@ -15,6 +15,7 @@ import com.example.bookstoreapplication.service.cartitem.CartItemService;
 import java.util.HashSet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -31,6 +32,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Transactional
     public ShoppingCartResponseDto addBookToCart(Long userId, CartItemRequestDto requestDto) {
         cartRepository.findShoppingCartByUserId(userId)
                 .getCartItems()
@@ -40,6 +42,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Transactional
     public ShoppingCartResponseDto updateBookQuantityById(Long cartItemId, Long userId,
                                                           CartItemUpdateDto updateDto) {
         itemService.updateCartItem(cartItemId, updateDto);
@@ -49,6 +52,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Transactional
     public void removeBookFromCart(Long userId, Long cartItemId) {
         ShoppingCart shoppingCart = cartRepository.findShoppingCartByUserId(userId);
         CartItem cartItem = itemRepository.findById(cartItemId)
@@ -60,6 +64,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Transactional
     public void createNewShoppingCart(User user) {
         ShoppingCart cart = new ShoppingCart();
         cart.setUser(user);

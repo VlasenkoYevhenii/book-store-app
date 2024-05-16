@@ -8,6 +8,7 @@ import com.example.bookstoreapplication.model.CartItem;
 import com.example.bookstoreapplication.repository.cartitem.CartItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -22,6 +23,8 @@ public class CartItemServiceImpl implements CartItemService {
         );
     }
 
+    @Override
+    @Transactional
     public void updateCartItem(Long cartItemId, CartItemUpdateDto updateDto) {
         repository.findById(cartItemId).ifPresent(item -> {
             item.setQuantity(updateDto.quantity());
