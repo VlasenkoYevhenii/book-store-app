@@ -9,14 +9,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.Data;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -36,5 +34,5 @@ public class ShoppingCart {
     private Set<CartItem> cartItems = new HashSet<>();
 
     @Column(nullable = false)
-    private boolean isDeleted;
+    private boolean isDeleted = false;
 }

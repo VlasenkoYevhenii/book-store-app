@@ -17,7 +17,9 @@ public interface BookMapper {
 
     BookDto toDto(Book book);
 
-    Book toModel(CreateBookRequestDto dto);
+    Book toModelFromRequest(CreateBookRequestDto dto);
+
+    Book toModel(BookDto dto);
 
     BookDtoWithoutCategoryIds toDtoWithoutCategoryIds(Book book);
 

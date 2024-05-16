@@ -1,9 +1,8 @@
 package com.example.bookstoreapplication.dto.shoppingcart;
 
 import com.example.bookstoreapplication.model.CartItem;
-import lombok.Data;
-
 import java.util.Set;
+import lombok.Data;
 
 @Data
 public class ShoppingCartResponseDto {

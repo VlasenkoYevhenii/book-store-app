@@ -24,7 +24,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto save(CreateBookRequestDto dto) {
-        Book book = mapper.toModel(dto);
+        Book book = mapper.toModelFromRequest(dto);
         return mapper.toDto(bookRepository.save(book));
     }
 
@@ -43,7 +43,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto updateBook(Long id, CreateBookRequestDto dto) {
-        Book book = mapper.toModel(dto);
+        Book book = mapper.toModelFromRequest(dto);
         book.setId(id);
         return mapper.toDto(bookRepository.save(book));
     }
