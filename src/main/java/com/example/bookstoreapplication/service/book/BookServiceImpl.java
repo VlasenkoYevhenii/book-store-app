@@ -1,6 +1,7 @@
 package com.example.bookstoreapplication.service.book;
 
 import com.example.bookstoreapplication.dto.book.BookDto;
+import com.example.bookstoreapplication.dto.book.BookDtoWithoutCategoryIds;
 import com.example.bookstoreapplication.dto.book.BookSearchParameters;
 import com.example.bookstoreapplication.dto.book.CreateBookRequestDto;
 import com.example.bookstoreapplication.exception.EntityNotFoundException;
@@ -59,6 +60,15 @@ public class BookServiceImpl implements BookService {
                 .findAll(spec)
                 .stream()
                 .map(mapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<BookDtoWithoutCategoryIds> getBookDtosByCategoryId(Long id, Pageable pageable) {
+        return bookRepository
+                .findByCategoriesId(id)
+                .stream()
+                .map(mapper::toDtoWithoutCategoryIds)
                 .toList();
     }
 }
