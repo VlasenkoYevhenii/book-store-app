@@ -8,9 +8,11 @@ import com.example.bookstoreapplication.mapper.CartItemMapper;
 import com.example.bookstoreapplication.mapper.ShoppingCartMapper;
 import com.example.bookstoreapplication.model.CartItem;
 import com.example.bookstoreapplication.model.ShoppingCart;
+import com.example.bookstoreapplication.model.User;
 import com.example.bookstoreapplication.repository.cartitem.CartItemRepository;
 import com.example.bookstoreapplication.repository.shoppingcart.ShoppingCartRepository;
 import com.example.bookstoreapplication.service.cartitem.CartItemService;
+import java.util.HashSet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +48,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return cartMapper.toDto(shoppingCart);
     }
 
+
+
     @Override
     public void removeBookFromCart(Long userId, Long cartItemId) {
         ShoppingCart shoppingCart = cartRepository.findShoppingCartByUserId(userId);
@@ -55,5 +59,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCart.getCartItems().remove(cartItem);
         cartRepository.save(shoppingCart);
         itemRepository.delete(cartItem);
+    }
+
+    @Override
+    public void createNewShoppingCart(User user) {
+        ShoppingCart cart = new ShoppingCart();
+        cart.setUser(user);
+        cart.setCartItems(new HashSet<>());
+        cartRepository.save(cart);
     }
 }
