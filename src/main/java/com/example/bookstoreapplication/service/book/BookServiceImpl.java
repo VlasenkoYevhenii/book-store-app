@@ -24,7 +24,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto save(CreateBookRequestDto dto) {
-        Book book = mapper.toModelFromRequest(dto);
+        Book book = mapper.toModel(dto);
         return mapper.toDto(bookRepository.save(book));
     }
 
@@ -43,7 +43,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto updateBook(Long id, CreateBookRequestDto dto) {
-        Book book = mapper.toModelFromRequest(dto);
+        Book book = mapper.toModel(dto);
         book.setId(id);
         return mapper.toDto(bookRepository.save(book));
     }
@@ -66,9 +66,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookDtoWithoutCategoryIds> getBookDtosByCategoryId(Long id, Pageable pageable) {
         return bookRepository
-                .findByCategoriesId(id)
+                .findByCategoriesId(id, pageable)
                 .stream()
-                .map(mapper::toDtoWithoutCategoryIds)
+                .map(mapper::toDtoWithoutCategories)
                 .toList();
     }
 }

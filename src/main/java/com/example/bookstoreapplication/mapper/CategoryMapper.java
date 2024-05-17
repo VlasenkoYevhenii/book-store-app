@@ -15,4 +15,5 @@ public interface CategoryMapper {
     List<CategoryDto> toDtoList(List<Category> categoryList);
 
     Category toModel(CategoryRequestDto dto);
+
 }
