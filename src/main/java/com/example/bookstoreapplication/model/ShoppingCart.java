@@ -6,6 +6,10 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
+import jakarta.persistence.NamedEntityGraphs;
+import jakarta.persistence.NamedSubgraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -22,6 +26,23 @@ import org.hibernate.annotations.SQLRestriction;
 @SQLDelete(sql = "UPDATE carts SET is_deleted = true WHERE id=?")
 @SQLRestriction("is_deleted = false")
 @Table(name = "shopping_carts")
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "ShoppingCart.withUserAndCartItemsAndBooks",
+                attributeNodes = {
+                        @NamedAttributeNode("user"),
+                        @NamedAttributeNode(value = "cartItems", subgraph = "cartItemsGraph")
+                },
+                subgraphs = {
+                        @NamedSubgraph(
+                                name = "cartItemsGraph",
+                                attributeNodes = {
+                                        @NamedAttributeNode("book")
+                                }
+                        )
+                }
+        )
+})
 public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +51,7 @@ public class ShoppingCart {
     @OneToOne
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "shoppingCart")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shoppingCart")
     private Set<CartItem> cartItems = new HashSet<>();
 
     @Column(nullable = false)

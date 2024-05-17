@@ -2,7 +2,6 @@ package com.example.bookstoreapplication.mapper;
 
 import com.example.bookstoreapplication.config.MapperConfig;
 import com.example.bookstoreapplication.dto.cartitem.CartItemResponseDto;
-import com.example.bookstoreapplication.dto.shoppingcart.ShoppingCartRequestDto;
 import com.example.bookstoreapplication.dto.shoppingcart.ShoppingCartResponseDto;
 import com.example.bookstoreapplication.model.CartItem;
 import com.example.bookstoreapplication.model.ShoppingCart;
@@ -16,8 +15,6 @@ import org.mapstruct.ReportingPolicy;
 
 @Mapper(config = MapperConfig.class, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ShoppingCartMapper {
-    ShoppingCart toModel(ShoppingCartRequestDto shoppingCartRequestDto);
-
     @Mapping(target = "userId", source = "user", qualifiedByName = "getUserIdFromUser")
     ShoppingCartResponseDto toDto(ShoppingCart shoppingCart);
 
