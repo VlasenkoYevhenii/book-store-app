@@ -1,8 +1,12 @@
 package com.example.bookstoreapplication.controller;
 
-import com.example.bookstoreapplication.model.ShoppingCart;
+import com.example.bookstoreapplication.dto.order.OrderRequestShippingAddressDto;
+import com.example.bookstoreapplication.dto.order.OrderRequestStatusUpdateDto;
+import com.example.bookstoreapplication.dto.order.OrderResponseDto;
+import com.example.bookstoreapplication.dto.orderitem.OrderItemResponseDto;
 import com.example.bookstoreapplication.model.User;
-import com.example.bookstoreapplication.repository.shoppingcart.ShoppingCartRepository;
+import com.example.bookstoreapplication.service.order.OrderService;
+import com.example.bookstoreapplication.service.orderitem.OrderItemService;
 import com.example.bookstoreapplication.service.shoppingcart.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,37 +27,38 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/orders")
 @Tag(name = "Orders and Order items")
 public class OrderController {
-    private final ShoppingCartService shoppingCartService;
+    private final OrderService orderService;
+    private final OrderItemService orderItemService;
 
     @PostMapping
     @Operation(summary = "Place order", description = "Place a new order")
-    public OrderResponseDto placeOrder(@RequestBody @Valid OrderShippingAddressDto dto,
+    public OrderResponseDto placeOrder(@RequestBody @Valid OrderRequestShippingAddressDto dto,
                                        Authentication auth) {
         User user = (User) auth.getPrincipal();
-        return orderService.placeOrder(user.getId(), dto);
+        return orderService.placeOrder(user, dto);
     }
 
     @GetMapping
-    @Operation(name = "Get all orders", description = "Get all orders for current user")
+    @Operation(summary = "Get all orders", description = "Get all orders for current user")
     public OrderResponseDto getAllOrders(Authentication auth) {
         User user = (User) auth.getPrincipal();
-        return orderService.findAllByUserId(user.getId());
+        return orderService.getAllOrdersByUser(user);
     }
 
     @PatchMapping("/{orderId}")
     public void updateOrderStatus(@PathVariable Long orderId,
-                                  @RequestBody @Valid OrderStatusUpdateDto dto) {
+                                  @RequestBody @Valid OrderRequestStatusUpdateDto dto) {
         orderService.updateOrderStatus(orderId, dto);
     }
 
     @GetMapping("/{orderId}/items")
     public List<OrderItemResponseDto> getOrderItems(@PathVariable Long orderId) {
-        return orderItemService.getItemsByOrderId(orderId);
+        return orderItemService.getOrderItemsByOrderId(orderId);
     }
 
     @GetMapping("/{orderId}/items/{itemId}")
-    public OrderItemResponseDto getOrderItemFromSpecifiedOrder(@PathVariable Long orderId,
+    public OrderItemResponseDto getOrderItemFromSpecificOrder(@PathVariable Long orderId,
                                                                @PathVariable Long itemId) {
-        return orderService.getItemFromOrderByItemId(itemId);
+        return orderItemService.getOrderItemFromSpecificOrder(orderId, itemId);
     }
 }

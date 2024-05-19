@@ -1,11 +1,12 @@
 package com.example.bookstoreapplication.service.orderitem;
 
 import com.example.bookstoreapplication.dto.order.OrderResponseDto;
+import com.example.bookstoreapplication.dto.orderitem.OrderItemResponseDto;
 import java.util.List;
 
 public interface OrderItemService {
 
-    List<OrderResponseDto> getOrderItemsByOrderId(Long orderId);
+    List<OrderItemResponseDto> getOrderItemsByOrderId(Long orderId);
 
-    OrderResponseDto getOrderItemFromSpecificOrder(Long orderId, Long orderItemId);
+    OrderItemResponseDto getOrderItemFromSpecificOrder(Long orderId, Long orderItemId);
 }
