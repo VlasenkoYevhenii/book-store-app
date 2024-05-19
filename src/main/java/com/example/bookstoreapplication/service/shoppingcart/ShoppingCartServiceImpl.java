@@ -60,7 +60,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                             + cartItemId));
         shoppingCart.getCartItems().remove(cartItem);
         cartRepository.save(shoppingCart);
-        itemRepository.delete(cartItem);
     }
 
     @Override
