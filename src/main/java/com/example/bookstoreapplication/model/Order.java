@@ -5,9 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -21,8 +21,10 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
     @ManyToOne
+    @JoinColumn(name = "userId")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private User user;
     @Column(nullable = false)
     private Status status;
@@ -34,8 +36,6 @@ public class Order {
     private String shippingAddress;
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany
+    @OneToMany(mappedBy = "order", orphanRemoval = true)
     private Set<OrderItem> orderItems;
-
-
 }
