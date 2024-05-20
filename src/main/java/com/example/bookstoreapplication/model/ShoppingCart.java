@@ -51,7 +51,7 @@ public class ShoppingCart {
     @OneToOne
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shoppingCart")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shoppingCart", orphanRemoval = true)
     private Set<CartItem> cartItems = new HashSet<>();
 
     @Column(nullable = false)

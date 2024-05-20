@@ -9,14 +9,15 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.function.Function;
 import javax.crypto.SecretKey;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JwtUtil {
-
-    private static final String VALIDATION_EXCEPTION_MSG = "Expired or invalid JWT token";
-
+    private static final Logger logger = LogManager.getLogger(JwtUtil.class);
+    private static final String LOGGER_MESSAGE = "Token validation error: {}";
     private final SecretKey secretKey;
     private final long expiration;
 
@@ -43,7 +44,8 @@ public class JwtUtil {
                     .parseClaimsJws(token);
             return !claimsJws.getBody().getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException e) {
-            throw new JwtException(VALIDATION_EXCEPTION_MSG, e);
+            logger.error(LOGGER_MESSAGE, e.getMessage());
+            return false;
         }
     }
 

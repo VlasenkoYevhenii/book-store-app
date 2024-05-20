@@ -30,7 +30,7 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "List all books",
                 description = "Returns a list of all books(uses pagination)")
     public List<BookDto> getAll(Pageable pageable) {
@@ -38,7 +38,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Get a book by ID", description = "Returns a book by specific ID")
     public BookDto getBookById(@PathVariable Long id) {
         return bookService.getById(id);
@@ -46,14 +46,14 @@ public class BookController {
 
     @PostMapping
     @Operation(summary = "Add a new book to DB", description = "Adds a book to DB")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public BookDto createBook(@Valid @RequestBody CreateBookRequestDto dto) {
         return bookService.save(dto);
     }
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update a book", description = "Updates a book by its ID")
     public BookDto updateBook(@PathVariable Long id, @RequestBody CreateBookRequestDto dto) {
         return bookService.updateBook(id, dto);
@@ -61,14 +61,14 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Delete by ID", description = "Deletes a book from DB")
     public void delete(@PathVariable Long id) {
         bookService.delete(id);
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Search book", description = "Searches a book by authors or its title")
     public List<BookDto> search(BookSearchParameters params) {
         return bookService.search(params);
