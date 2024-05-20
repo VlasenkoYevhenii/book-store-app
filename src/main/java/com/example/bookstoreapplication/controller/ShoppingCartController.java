@@ -70,6 +70,6 @@ public class ShoppingCartController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeBookFromCart(@PathVariable Long cartItemId, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        shoppingCartService.removeBookFromCart(user.getId(), cartItemId);
+        shoppingCartService.removeItemFromCart(user.getId(), cartItemId);
     }
 }
