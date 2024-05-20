@@ -11,5 +11,5 @@ public class CartItemRequestDto {
     private Long bookId;
     @NotNull
     @Min(1)
-    private int quantity;
+    private Integer quantity;
 }
