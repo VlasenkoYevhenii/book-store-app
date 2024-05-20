@@ -1,6 +1,17 @@
 databaseChangeLog:
   - changeSet:
-      id: 0
-      author: admin
+      id: add-shopping-cart-for-admin-user
+      author: vlasenko
       changes:
-        -
+        - insert:
+            tableName: shopping_carts
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: is_deleted
+                  value: 0
