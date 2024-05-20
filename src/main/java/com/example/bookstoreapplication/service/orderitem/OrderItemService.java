@@ -1,6 +1,5 @@
 package com.example.bookstoreapplication.service.orderitem;
 
-import com.example.bookstoreapplication.dto.order.OrderResponseDto;
 import com.example.bookstoreapplication.dto.orderitem.OrderItemResponseDto;
 import java.util.List;
 

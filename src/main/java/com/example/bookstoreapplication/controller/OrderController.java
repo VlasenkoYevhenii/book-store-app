@@ -7,7 +7,6 @@ import com.example.bookstoreapplication.dto.orderitem.OrderItemResponseDto;
 import com.example.bookstoreapplication.model.User;
 import com.example.bookstoreapplication.service.order.OrderService;
 import com.example.bookstoreapplication.service.orderitem.OrderItemService;
-import com.example.bookstoreapplication.service.shoppingcart.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -40,7 +39,7 @@ public class OrderController {
 
     @GetMapping
     @Operation(summary = "Get all orders", description = "Get all orders for current user")
-    public OrderResponseDto getAllOrders(Authentication auth) {
+    public List<OrderResponseDto> getAllOrders(Authentication auth) {
         User user = (User) auth.getPrincipal();
         return orderService.getAllOrdersByUser(user);
     }
@@ -58,7 +57,7 @@ public class OrderController {
 
     @GetMapping("/{orderId}/items/{itemId}")
     public OrderItemResponseDto getOrderItemFromSpecificOrder(@PathVariable Long orderId,
-                                                               @PathVariable Long itemId) {
+                                                              @PathVariable Long itemId) {
         return orderItemService.getOrderItemFromSpecificOrder(orderId, itemId);
     }
 }
