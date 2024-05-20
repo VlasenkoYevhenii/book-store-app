@@ -10,9 +10,9 @@ import com.example.bookstoreapplication.model.Order;
 import com.example.bookstoreapplication.model.OrderItem;
 import com.example.bookstoreapplication.model.ShoppingCart;
 import com.example.bookstoreapplication.model.Status;
-import com.example.bookstoreapplication.model.User;
 import com.example.bookstoreapplication.repository.order.OrderRepository;
 import com.example.bookstoreapplication.repository.shoppingcart.ShoppingCartRepository;
+import com.example.bookstoreapplication.repository.user.UserRepository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,13 +29,13 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
     private final ShoppingCartRepository shoppingCartRepository;
     private final OrderItemMapper orderItemMapper;
+    private final UserRepository userRepository;
 
     @Transactional
     @Override
-    public OrderResponseDto placeOrder(User user, OrderRequestShippingAddressDto dto) {
-        Long userId = user.getId();
+    public OrderResponseDto placeOrder(Long userId, OrderRequestShippingAddressDto dto) {
         ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserId(userId);
-        Order order = createOrder(user, dto.getShippingAddress(), shoppingCart);
+        Order order = createOrder(userId, dto.getShippingAddress(), shoppingCart);
         orderRepository.save(order);
         order.setOrderItems(populateWithOrderItems(shoppingCart));
         order.setTotal(calculateTotalPrice(shoppingCart));
@@ -44,10 +44,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<OrderResponseDto> getAllOrdersByUser(User user) {
-        List<Order> orders = orderRepository.findByUserId(user.getId());
+    public List<OrderResponseDto> getAllOrdersByUserId(Long userId) {
+        List<Order> orders = orderRepository.findByUserId(userId);
         if (orders.isEmpty()) {
-            throw new EntityNotFoundException("No orders found for user " + user.getId());
+            throw new EntityNotFoundException("No orders found for user " + userId);
         }
         return orderMapper.toResponseDtoList(orders);
     }
@@ -60,9 +60,10 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
     }
 
-    private Order createOrder(User user, String shippingAddress, ShoppingCart shoppingCart) {
+    private Order createOrder(Long userId, String shippingAddress, ShoppingCart shoppingCart) {
         Order order = new Order();
-        order.setUser(user);
+        order.setUser(userRepository.findById(userId).orElseThrow(
+                 () -> new EntityNotFoundException("Failed to find user by id = " + userId)));
         order.setStatus(Status.PENDING);
         order.setTotal(calculateTotalPrice(shoppingCart));
         order.setOrderDate(LocalDateTime.now());

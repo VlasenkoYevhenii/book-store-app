@@ -34,14 +34,14 @@ public class OrderController {
     public OrderResponseDto placeOrder(@RequestBody @Valid OrderRequestShippingAddressDto dto,
                                        Authentication auth) {
         User user = (User) auth.getPrincipal();
-        return orderService.placeOrder(user, dto);
+        return orderService.placeOrder(user.getId(), dto);
     }
 
     @GetMapping
     @Operation(summary = "Get all orders", description = "Get all orders for current user")
     public List<OrderResponseDto> getAllOrders(Authentication auth) {
         User user = (User) auth.getPrincipal();
-        return orderService.getAllOrdersByUser(user);
+        return orderService.getAllOrdersByUserId(user.getId());
     }
 
     @PatchMapping("/{orderId}")
