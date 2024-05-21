@@ -31,15 +31,15 @@ public class CategoryController {
     private final BookService bookService;
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @Operation(summary = "Category creation",
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Create category",
                 description = "Add new category to the DB(ADMIN only)")
     public CategoryDto createCategory(CategoryRequestDto dto) {
         return categoryService.save(dto);
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Get all categories",
                 description = "Retrieves all the categories from the DB")
     public List<CategoryDto> getAll(Pageable pageable) {
@@ -47,7 +47,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Get category by id",
                 description = "Retrieves a category by id from the DB")
     public CategoryDto getCategoryById(@PathVariable Long id) {
@@ -55,7 +55,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Update category",
                 description = "Updates category by its id(ADMIN only)")
     public CategoryDto updateCategory(@PathVariable Long id, @RequestBody CategoryRequestDto dto) {
@@ -63,7 +63,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete category",
                 description = "Deletes category by its id from the DB (ADMIN only)")
@@ -72,7 +72,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}/books")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Get books by category id",
                 description = "Retrieves all books by category id")
     public List<BookDtoWithoutCategoryIds> getBooksByCategoryId(@PathVariable Long id,
