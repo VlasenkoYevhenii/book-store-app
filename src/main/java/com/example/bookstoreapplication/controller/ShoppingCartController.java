@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     @Operation(summary = "Get the shoppingCart",
             description = "Endpoint for getting user's shoppingCart from DB")
@@ -39,7 +39,7 @@ public class ShoppingCartController {
         return shoppingCartService.getByUserId(user.getId());
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
     @Operation(summary = "Add a cartItem to the shopping cart",
             description = "Endpoint for adding a cartItem to the shopping cart")
@@ -51,7 +51,7 @@ public class ShoppingCartController {
         return shoppingCartService.addBookToCart(user.getId(), cartItemRequestDto);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/cart-items/{cartItemId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update books quantity",
@@ -63,7 +63,7 @@ public class ShoppingCartController {
         return shoppingCartService.updateBookQuantityById(cartItemId, user.getId(), updateDto);
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/cart-items/{cartItemId}")
     @Operation(summary = "Delete a cartItem",
             description = "Endpoint for deleting a cart item DB")
