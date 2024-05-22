@@ -9,56 +9,53 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.function.Function;
 import javax.crypto.SecretKey;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class JwtUtil {
-    private static final Logger logger = LogManager.getLogger(JwtUtil.class);
-    private static final String LOGGER_MESSAGE = "Token validation error: {}";
-    private final SecretKey secretKey;
-    private final long expiration;
+    private static final String EXCEPTION = "Expired or invalid JWT token";
 
-    public JwtUtil(@Value("${jwt.secret}") String secret,
-                   @Value("${jwt.expiration}") long expiration) {
-        this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
-        this.expiration = expiration;
+    @Value("${jwt.expiration}")
+    private long expiration;
+
+    private final SecretKey secret;
+
+    public JwtUtil(@Value("${jwt.secret}") String secretString) {
+        secret = Keys.hmacShaKeyFor(secretString.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String name) {
         return Jwts.builder()
-                .setSubject(username)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(secretKey)
+                .subject(name)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(secret)
                 .compact();
     }
 
     public boolean isValidToken(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parser()
-                    .setSigningKey(secretKey)
+                    .verifyWith(secret)
                     .build()
-                    .parseClaimsJws(token);
-            return !claimsJws.getBody().getExpiration().before(new Date());
+                    .parseSignedClaims(token);
+            return !claimsJws.getPayload().getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException e) {
-            logger.error(LOGGER_MESSAGE, e.getMessage());
-            return false;
+            throw new JwtException(EXCEPTION);
         }
     }
 
     public String extractUsername(String token) {
-        return getClaimsFromToken(token, Claims::getSubject);
+        return getClaimFromToken(token, Claims::getSubject);
     }
 
-    private <T> T getClaimsFromToken(String token, Function<Claims, T> claimsResolver) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(secretKey)
+    private <T> T getClaimFromToken(String token, Function<Claims, T> claimsTFunction) {
+        final Claims claims = Jwts.parser()
+                .verifyWith(secret)
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
-        return claimsResolver.apply(claims);
+                .parseSignedClaims(token)
+                .getPayload();
+        return claimsTFunction.apply(claims);
     }
 }
