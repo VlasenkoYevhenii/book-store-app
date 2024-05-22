@@ -3,9 +3,11 @@ package com.example.bookstoreapplication.service.cartitem;
 import com.example.bookstoreapplication.dto.cartitem.CartItemRequestDto;
 import com.example.bookstoreapplication.dto.cartitem.CartItemResponseDto;
 import com.example.bookstoreapplication.dto.cartitem.CartItemUpdateDto;
+import com.example.bookstoreapplication.exception.EntityNotFoundException;
 import com.example.bookstoreapplication.mapper.CartItemMapper;
 import com.example.bookstoreapplication.model.CartItem;
 import com.example.bookstoreapplication.repository.cartitem.CartItemRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +28,13 @@ public class CartItemServiceImpl implements CartItemService {
     @Override
     @Transactional
     public void updateCartItem(Long cartItemId, CartItemUpdateDto updateDto) {
-        repository.findById(cartItemId).ifPresent(item -> {
-            item.setQuantity(updateDto.quantity());
-            repository.save(item);
-        });
+        Optional<CartItem> optionalItem = repository.findById(cartItemId);
+        if (optionalItem.isEmpty()) {
+            throw new EntityNotFoundException("CartItem with id " + cartItemId
+                        + " not found");
+        }
+        CartItem item = optionalItem.get();
+        item.setQuantity(updateDto.quantity());
+        repository.save(item);
     }
 }

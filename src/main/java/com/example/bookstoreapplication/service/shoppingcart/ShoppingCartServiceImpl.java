@@ -53,7 +53,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional
-    public void removeBookFromCart(Long userId, Long cartItemId) {
+    public void removeItemFromCart(Long userId, Long cartItemId) {
         ShoppingCart shoppingCart = cartRepository.findShoppingCartByUserId(userId);
         CartItem cartItem = itemRepository.findById(cartItemId)
                 .orElseThrow(() -> new EntityNotFoundException("CartItem not found: "
