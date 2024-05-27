@@ -122,7 +122,12 @@
 			<artifactId>log4j-core</artifactId>
 			<version>${log4j-core.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>mysql</artifactId>
+			<version>1.19.8</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
