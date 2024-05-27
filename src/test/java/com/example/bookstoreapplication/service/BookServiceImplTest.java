@@ -38,7 +38,7 @@ class BookServiceImplTest {
     private static final Integer GREAT_GATSBY_ID = 0;
     private static final Integer PRIDE_AND_PREJUDICE_ID = 1;
     private static final Integer BOOK_1984_ID = 2;
-    private static final Integer DEFAULT_PAGE_NUMBER = 0;
+    private static final Integer ZERO_PAGE_NUMBER = 0;
     private static final Integer DEFAULT_PAGE_SIZE = 20;
     private static final Long VALID_BOOK_ID = 1L;
     private static final Long INVALID_BOOK_ID = 20L;
@@ -143,7 +143,7 @@ class BookServiceImplTest {
     void findAllBooks_ValidPageable_ReturnThreeBooks() {
         PageImpl<Book> bookPage = new PageImpl<>(books);
 
-        when(bookRepository.findAll(PageRequest.of(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE)))
+        when(bookRepository.findAll(PageRequest.of(ZERO_PAGE_NUMBER, DEFAULT_PAGE_SIZE)))
                 .thenReturn(bookPage);
         when(bookMapper.toDto(books.get(GREAT_GATSBY_ID)))
                 .thenReturn(bookDtos.get(GREAT_GATSBY_ID));
@@ -155,11 +155,11 @@ class BookServiceImplTest {
         List<BookDto> expected = List.of(bookDtos.get(GREAT_GATSBY_ID),
                 bookDtos.get(PRIDE_AND_PREJUDICE_ID), bookDtos.get(BOOK_1984_ID));
         List<BookDto> actual = bookServiceImpl
-                .findAll(PageRequest.of(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
+                .findAll(PageRequest.of(ZERO_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
         Assertions.assertEquals(3, actual.size());
         Assertions.assertEquals(expected, actual);
         verify(bookRepository, times(ONE_TIME))
-                .findAll(PageRequest.of(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
+                .findAll(PageRequest.of(ZERO_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
     }
 
     @Test
@@ -224,7 +224,6 @@ class BookServiceImplTest {
         verify(bookRepository, times(ONE_TIME)).save(animalFarm);
         verify(bookMapper, times(ONE_TIME)).toDto(animalFarm);
     }
-
 
     @Test
     @DisplayName("Verify getBookDtosByParameters() method with correct params")

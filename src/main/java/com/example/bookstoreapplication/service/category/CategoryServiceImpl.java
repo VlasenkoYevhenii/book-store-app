@@ -19,7 +19,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> findAll(Pageable pageable) {
-        return mapper.toDtoList(repository.findAll());
+        return mapper.toDtoList(repository.findAll(pageable).getContent());
     }
 
     @Override
