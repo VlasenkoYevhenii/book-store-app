@@ -7,8 +7,10 @@ import jakarta.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.util.Set;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.hibernate.validator.constraints.ISBN;
 
+@Accessors(chain = true)
 @Data
 public class CreateBookRequestDto {
     @NotBlank(message = "Define the book title")

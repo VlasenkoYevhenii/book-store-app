@@ -1,7 +1,6 @@
 package com.example.bookstoreapplication.repository.book;
 
 import com.example.bookstoreapplication.model.Book;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,5 +25,5 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
             + "LEFT JOIN books_categories ON books.id = books_categories.book_id "
             + "WHERE books_categories.category_id = :id",
             nativeQuery = true)
-    List<Book> findByCategoriesId(Long id, Pageable pageable);
+    Page<Book> findByCategoriesId(Long id, Pageable pageable);
 }
