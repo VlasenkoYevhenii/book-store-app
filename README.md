@@ -14,7 +14,8 @@ It offers the ability to search for books by author and/or title, as well as the
 - Git 🔄
 - IntelliJ IDEA 🖥️
 
-
+# Installation
+- Clone the repo, run `mvn clean package` and run it in IDE.
 ## Endpoints
 - To send requests to this app's endpoints you should register a new user first.
 
@@ -81,12 +82,13 @@ Other functionality:
 `GET: /api/orders/{orderId}/items` - endpoint for getting order items from specific order (User authority)  
 `GET: /api/orders/{orderId}/items/{itemId}` - endpoint for getting a specific item from certain order (User authority)
 
-**Cart**
-
+**Cart**  
 `GET: /api/cart` - endpoint for getting all items in your shopping cart (User authority)  
 `POST: /api/cart` - endpoint for adding items to your shopping cart (User authority)  
 `PUT: /api/cart/cart-items/{itemId}` - endpoint for updating items quantity (User authority)  
 `DELETE: /api/cart/cart-items/{itemId}` - endpoint for deleting items from your shopping cart (User authority)
+## Possible improvements
+- To improve my project, I plan to add a customer ability to write reviews and implement some payment system.
 
 ## Contributing
 
@@ -94,4 +96,4 @@ Pull requests are welcome.
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)cation is designed for managing inventory in a bookstore 📚 - featuring convenient search and the ability to create orders with ease 🛒
+[MIT](https://choosealicense.com/licenses/mit/)
