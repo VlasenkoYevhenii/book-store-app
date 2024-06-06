@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 08-create-categories-table
+      id: create-categories-table
       author: vlasenko
       changes:
         - createTable:

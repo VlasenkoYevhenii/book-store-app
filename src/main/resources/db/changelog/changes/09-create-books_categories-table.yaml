@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 08-create-categories-table.yaml
+      id: create-books_categories-table.yaml
       author: vlasenko
       changes:
         - createTable:
