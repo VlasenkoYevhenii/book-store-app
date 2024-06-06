@@ -22,42 +22,42 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     private static final String FIND_CART_ITEM_EXCEPTION = "Can't find cartItem by id ";
-    private final ShoppingCartRepository shoppingCartRepository;
-    private final ShoppingCartMapper shoppingCartMapper;
-    private final CartItemService cartItemService;
-    private final CartItemRepository cartItemRepository;
+    private final ShoppingCartRepository cartRepository;
+    private final ShoppingCartMapper cartMapper;
+    private final CartItemService itemService;
+    private final CartItemRepository itemRepository;
 
     @Override
     public ShoppingCartResponseDto createShoppingCart(User user) {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
-        return shoppingCartMapper
-                .toResponseDto(shoppingCartRepository.save(shoppingCart));
+        return cartMapper
+                .toResponseDto(cartRepository.save(shoppingCart));
     }
 
     @Override
     @Transactional
     public ShoppingCartResponseDto addBookToShoppingCart(User user,
                                                          CartItemRequestDto cartItemRequestDto) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserId(user.getId());
+        ShoppingCart shoppingCart = cartRepository.findShoppingCartByUserId(user.getId());
         CartItemResponseDto responseDto
-                = cartItemService.createCartItem(shoppingCart, cartItemRequestDto);
+                = itemService.createCartItem(shoppingCart, cartItemRequestDto);
         CartItem cartItem = findById(responseDto.getId());
         addCartItemToShoppingCart(shoppingCart, cartItem);
-        return shoppingCartMapper.toResponseDto(shoppingCart);
+        return cartMapper.toResponseDto(shoppingCart);
     }
 
     @Override
     public ShoppingCartResponseDto getShoppingCartDto(Long userId) {
-        return shoppingCartMapper
-                .toResponseDto(shoppingCartRepository.findShoppingCartByUserId(userId));
+        return cartMapper
+                .toResponseDto(cartRepository.findShoppingCartByUserId(userId));
     }
 
     @Override
     public ShoppingCartResponseDto clearShoppingCart(ShoppingCart shoppingCart) {
         shoppingCart.setCartItems(new HashSet<>());
-        return shoppingCartMapper
-                .toResponseDto(shoppingCartRepository.save(shoppingCart));
+        return cartMapper
+                .toResponseDto(cartRepository.save(shoppingCart));
     }
 
     @Override
@@ -67,11 +67,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                                                       ShoppingCartRequestDto requestDto) {
         CartItem cartItem = findById(cartItemId);
         cartItem.setQuantity(requestDto.getQuantity());
-        cartItemService.save(cartItem);
-        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserId(user.getId());
-        shoppingCart.setCartItems(updateCartItems(cartItemId, shoppingCart, cartItem));
-        shoppingCartRepository.save(shoppingCart);
-        return shoppingCartMapper.toResponseDto(shoppingCart);
+        itemService.save(cartItem);
+        cartRepository.findShoppingCartByUserId(user.getId()).getCartItems().add(cartItem);
+
+        return cartMapper.toResponseDto(cartRepository.findShoppingCartByUserId(user.getId()));
     }
 
     private Set<CartItem> updateCartItems(Long cartItemId, ShoppingCart shoppingCart,
@@ -89,11 +88,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private void addCartItemToShoppingCart(ShoppingCart shoppingCart, CartItem cartItem) {
         shoppingCart.getCartItems().add(cartItem);
-        shoppingCartRepository.save(shoppingCart);
+        cartRepository.save(shoppingCart);
     }
 
     private CartItem findById(Long cartItemId) {
-        return cartItemRepository.findById(cartItemId).orElseThrow(
+        return itemRepository.findById(cartItemId).orElseThrow(
                 () -> new EntityNotFoundException(FIND_CART_ITEM_EXCEPTION + cartItemId));
     }
 }
