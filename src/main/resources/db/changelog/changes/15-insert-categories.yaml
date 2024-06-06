@@ -11,7 +11,7 @@ databaseChangeLog:
                   value: 1
               - column:
                   name: name
-                  value: No category defined
+                  value: "No category defined"
         - insert:
             tableName: categories
             columns:
@@ -20,7 +20,7 @@ databaseChangeLog:
                   value: 2
               - column:
                   name: name
-                  value: History
+                  value: "History"
         - insert:
             tableName: categories
             columns:
@@ -29,7 +29,7 @@ databaseChangeLog:
                   value: 3
               - column:
                   name: name
-                  value: Art and Culture
+                  value: "Art and Culture"
         - insert:
             tableName: categories
             columns:
@@ -38,7 +38,7 @@ databaseChangeLog:
                   value: 4
               - column:
                   name: name
-                  value: Science
+                  value: "Science"
         - insert:
             tableName: categories
             columns:
@@ -47,7 +47,7 @@ databaseChangeLog:
                   value: 5
               - column:
                   name: name
-                  value: Politics
+                  value: "Politics"
         - insert:
             tableName: categories
             columns:
@@ -56,7 +56,7 @@ databaseChangeLog:
                   value: 6
               - column:
                   name: name
-                  value: Fiction
+                  value: "Fiction"
         - insert:
             tableName: categories
             columns:
@@ -65,7 +65,7 @@ databaseChangeLog:
                   value: 7
               - column:
                   name: name
-                  value: Young Adult
+                  value: "Young Adult"
         - insert:
             tableName: categories
             columns:
@@ -74,4 +74,4 @@ databaseChangeLog:
                   value: 8
               - column:
                   name: name
-                  value: Classic Literature
+                  value: "Classic Literature"
