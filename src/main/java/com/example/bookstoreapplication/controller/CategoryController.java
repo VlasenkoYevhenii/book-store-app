@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("api/categories")
 @Tag(name = "Categories", description = "Category management")
 public class CategoryController {
     private final CategoryService categoryService;
@@ -34,7 +34,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Create category",
                 description = "Add new category to the DB(ADMIN only)")
-    public CategoryDto createCategory(CategoryRequestDto dto) {
+    public CategoryDto createCategory(@RequestBody CategoryRequestDto dto) {
         return categoryService.save(dto);
     }
 
