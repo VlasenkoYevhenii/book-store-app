@@ -32,7 +32,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
         return shoppingCartMapper
-                .toDto(shoppingCartRepository.save(shoppingCart));
+                .toResponseDto(shoppingCartRepository.save(shoppingCart));
     }
 
     @Override
@@ -44,20 +44,20 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 = cartItemService.createCartItem(shoppingCart, cartItemRequestDto);
         CartItem cartItem = findById(responseDto.getId());
         addCartItemToShoppingCart(shoppingCart, cartItem);
-        return shoppingCartMapper.toDto(shoppingCart);
+        return shoppingCartMapper.toResponseDto(shoppingCart);
     }
 
     @Override
     public ShoppingCartResponseDto getShoppingCartDto(Long userId) {
         return shoppingCartMapper
-                .toDto(shoppingCartRepository.findShoppingCartByUserId(userId));
+                .toResponseDto(shoppingCartRepository.findShoppingCartByUserId(userId));
     }
 
     @Override
     public ShoppingCartResponseDto clearShoppingCart(ShoppingCart shoppingCart) {
         shoppingCart.setCartItems(new HashSet<>());
         return shoppingCartMapper
-                .toDto(shoppingCartRepository.save(shoppingCart));
+                .toResponseDto(shoppingCartRepository.save(shoppingCart));
     }
 
     @Override
@@ -71,7 +71,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUserId(user.getId());
         shoppingCart.setCartItems(updateCartItems(cartItemId, shoppingCart, cartItem));
         shoppingCartRepository.save(shoppingCart);
-        return shoppingCartMapper.toDto(shoppingCart);
+        return shoppingCartMapper.toResponseDto(shoppingCart);
     }
 
     private Set<CartItem> updateCartItems(Long cartItemId, ShoppingCart shoppingCart,
