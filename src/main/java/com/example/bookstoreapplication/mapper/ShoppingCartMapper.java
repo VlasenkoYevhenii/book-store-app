@@ -16,9 +16,10 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(config = MapperConfig.class, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ShoppingCartMapper {
     @Mapping(target = "userId", source = "user", qualifiedByName = "getUserIdFromUser")
+    @Mapping(target = "cartItems", source = "cartItems", qualifiedByName = "getCartItemsDtos")
     ShoppingCartResponseDto toDto(ShoppingCart shoppingCart);
 
-    @Named("getCartItemsDtoSet")
+    @Named("getCartItemsDtos")
     default Set<CartItemResponseDto> getCartItemsDtoSet(Set<CartItem> cartItemSet) {
         return cartItemSet.stream()
                 .map(this::toCartItemResponseDto)

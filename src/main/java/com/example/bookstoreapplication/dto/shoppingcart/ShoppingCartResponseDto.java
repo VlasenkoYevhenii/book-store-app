@@ -1,6 +1,6 @@
 package com.example.bookstoreapplication.dto.shoppingcart;
 
-import com.example.bookstoreapplication.model.CartItem;
+import com.example.bookstoreapplication.dto.cartitem.CartItemResponseDto;
 import java.util.Set;
 import lombok.Data;
 
@@ -8,5 +8,5 @@ import lombok.Data;
 public class ShoppingCartResponseDto {
     private Long id;
     private Long userId;
-    private Set<CartItem> cartItems;
+    private Set<CartItemResponseDto> cartItems;
 }
