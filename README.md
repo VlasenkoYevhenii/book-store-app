@@ -14,11 +14,31 @@ It offers the ability to search for books by author and/or title, as well as the
 - Git 🔄
 - IntelliJ IDEA 🖥️
 
-# Installation
-//TODO:
+## Installation
+To run the app - clone the repository. Also you need to have MySQL installed on your local computer, so I'd say it's much better to run it with Docker.  
+Open the project in IDE and use `docker-compose up`. You need place ".env" file in the root folder of the project to be abble to run it. The ".env" might look like this:
+```
+MYSQL_ROOT_PASSWORD=root_password
+MYSQL_DATABASE=database_name
+DB_USERNAME=user_name
+DB_PASSWORD=your_db_password
+SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/MYSQL_DATABASE
+SPRING_DATASOURCE_USERNAME=user_name
+SPRING_DATASOURCE_PASSWORD=user_password
+
+JWT_SECRET=vhc498ht4mwt94t94t9gt3h9g3gh3795xgh93h5g938gh3ughreg 
+JWT_EXPIRATION=300000000
+ARRAY_OF_ENDPOINTS=/api/auth/**,/swagger-ui/**,/v3/api-docs/**
+
+MYSQL_LOCAL_PORT=3306
+MYSQL_DOCKER_PORT=3307
+SPRING_LOCAL_PORT=8080 
+SPRING_DOCKER_PORT=8080
+DEBUG_PORT=5005
+```
 
 ## Endpoints
-You can try the app out in the Postman workspace. Just run the app and click the description of the endoint. JWT will be saved as a variable so you don't need to copy/paste it for each request! (If it doesn't work - choose the Bookstore Environment in the top right corner of the Postman UI)
+You can try the app out in the Postman workspace. Just run the app and click the description of the endoint. Securitty in the app is implemented with JWT usage, but don't worry - the token will be saved as a variable in Postman environment, so you don't need to copy/paste it for each request! (If it doesn't work - choose the Bookstore Environment in the top right corner of the Postman UI)
 
 ### User 🦸‍♀️
 - `POST /api/auth/login` - [login endpoint](https://www.postman.com/api-test-3019/workspace/bookstroe-managemet-public/request/31607463-21e38b64-020e-4428-bfde-a536e31e517d?action=share&creator=31607463&ctx=documentation)
@@ -59,4 +79,9 @@ The biggest challenge in creating this project was using Docker, as it was a new
 
 
 ## Possible improvements 📈
-In the near future, I plan to implement comprehensive code coverage with tests as a general improvement. Regarding logic and functionality enhancements, I aim to enable customers to pay for orders, most likely using Stripe, allow users to give feedback/ratings, and to implement order status notifications via a Telegram bot.
+In the near future, I plan to implement comprehensive code coverage with tests as a general improvement. Regarding logic and functionality enhancements, I aim to enable customers to pay for orders, most likely using Stripe, allow users to give feedback/ratings, and to implement order status notifications via a Telegram bot 📩. 
+
+***
+<div style="width:100%; text-align:center;">
+    <img src="images/readme_footer_image.gif" alt="Footer Image">
+</div>
