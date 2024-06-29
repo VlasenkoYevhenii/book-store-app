@@ -30,12 +30,12 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public void deleteById(Long cartItemId) {
-        cartItemRepository.deleteById(cartItemId);
+        deleteIfExists(cartItemId);
     }
 
     @Override
     public void deleteCartItem(CartItem cartItem) {
-        cartItemRepository.delete(cartItem);
+        deleteIfExists(cartItem.getId());
     }
 
     @Override
@@ -53,5 +53,11 @@ public class CartItemServiceImpl implements CartItemService {
     @Override
     public CartItemResponseDto save(CartItem cartItem) {
         return cartItemMapper.toCartItemResponseDto(cartItemRepository.save(cartItem));
+    }
+
+    private void deleteIfExists(Long cartItemId) {
+        if (cartItemRepository.existsById(cartItemId)) {
+            cartItemRepository.deleteById(cartItemId);
+        }
     }
 }

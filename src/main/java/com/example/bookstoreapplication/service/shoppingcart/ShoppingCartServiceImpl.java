@@ -4,6 +4,7 @@ import com.example.bookstoreapplication.dto.cartitem.CartItemRequestDto;
 import com.example.bookstoreapplication.dto.cartitem.CartItemResponseDto;
 import com.example.bookstoreapplication.dto.shoppingcart.ShoppingCartRequestDto;
 import com.example.bookstoreapplication.dto.shoppingcart.ShoppingCartResponseDto;
+import com.example.bookstoreapplication.exception.DataProcessingException;
 import com.example.bookstoreapplication.exception.EntityNotFoundException;
 import com.example.bookstoreapplication.mapper.ShoppingCartMapper;
 import com.example.bookstoreapplication.model.CartItem;
@@ -65,12 +66,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ShoppingCartResponseDto updateQuantityById(User user,
                                                       Long cartItemId,
                                                       ShoppingCartRequestDto requestDto) {
-        CartItem cartItem = findById(cartItemId);
-        cartItem.setQuantity(requestDto.getQuantity());
-        itemService.save(cartItem);
-        cartRepository.findShoppingCartByUserId(user.getId()).getCartItems().add(cartItem);
+        ShoppingCart cart = cartRepository.findShoppingCartByUserId(user.getId());
+        CartItem cartItem = itemRepository.findById(cartItemId).orElseThrow(
+                () -> new EntityNotFoundException("Failed to find CartItem by id = " + cartItemId));
 
-        return cartMapper.toResponseDto(cartRepository.findShoppingCartByUserId(user.getId()));
+        if (cart.getCartItems().contains(cartItem)) {
+            cartItem.setQuantity(requestDto.getQuantity());
+            itemService.save(cartItem);
+
+            ShoppingCart updatedCart = cartRepository.findShoppingCartByUserId(user.getId());
+            return cartMapper.toResponseDto(updatedCart);
+        } else {
+            throw new DataProcessingException("CartItem doesn't belong to this user");
+        }
     }
 
     private Set<CartItem> updateCartItems(Long cartItemId, ShoppingCart shoppingCart,
