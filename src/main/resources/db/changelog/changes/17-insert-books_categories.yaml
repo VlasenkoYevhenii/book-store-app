@@ -1,0 +1,112 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-books-categories-relations
+      author: vlasenko
+      changes:
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'The Mystery of the Lost Island')"
+              - column:
+                  name: category_id
+                  value: 6
+
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'History of Ancient Civilizations')"
+              - column:
+                  name: category_id
+                  value: 2
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'History of Ancient Civilizations')"
+              - column:
+                  name: category_id
+                  value: 4
+
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'The Art of Renaissance')"
+              - column:
+                  name: category_id
+                  value: 3
+
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'Modern Science Explained')"
+              - column:
+                  name: category_id
+                  value: 4
+
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'Political Theory and Practice')"
+              - column:
+                  name: category_id
+                  value: 5
+
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'Fantasy World Chronicles')"
+              - column:
+                  name: category_id
+                  value: 6
+
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'Young Heroes of Tomorrow')"
+              - column:
+                  name: category_id
+                  value: 7
+
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'Classic Tales Retold')"
+              - column:
+                  name: category_id
+                  value: 8
+
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'Cultural Evolution')"
+              - column:
+                  name: category_id
+                  value: 3
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: "(SELECT id FROM books WHERE title = 'Scientific Discoveries of the 21st Century')"
+              - column:
+                  name: category_id
+                  value: 4

@@ -24,6 +24,8 @@ public interface BookMapper {
     @Mapping(target = "categories", source = "categoryIds", qualifiedByName = "categoriesById")
     Book toModel(CreateBookRequestDto requestDto);
 
+    Book toModelFromResponse(BookDto dto);
+
     BookDtoWithoutCategoryIds toDtoWithoutCategories(Book book);
 
     @AfterMapping

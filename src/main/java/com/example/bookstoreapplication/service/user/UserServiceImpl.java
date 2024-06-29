@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Collections.singleton(userRole));
         User savedUser = userRepository.save(user);
 
-        shoppingCartService.createNewShoppingCart(savedUser);
+        shoppingCartService.createShoppingCart(savedUser);
         return mapper.toDto(savedUser);
     }
 

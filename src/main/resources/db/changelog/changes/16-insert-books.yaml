@@ -1,0 +1,254 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-books
+      author: vlasenko
+      changes:
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  value: 1
+              - column:
+                  name: title
+                  value: "The Mystery of the Lost Island"
+              - column:
+                  name: author
+                  value: "John Doe"
+              - column:
+                  name: isbn
+                  value: "978-3-16-148410-0"
+              - column:
+                  name: price
+                  valueNumeric: 19.99
+              - column:
+                  name: description
+                  value: "A thrilling adventure on a mysterious island."
+              - column:
+                  name: cover_image
+                  value: "http://example.com/images/lost_island.jpg"
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  value: 2
+              - column:
+                  name: title
+                  value: "History of Ancient Civilizations"
+              - column:
+                  name: author
+                  value: "Jane Smith"
+              - column:
+                  name: isbn
+                  value: "978-1-4028-9462-6"
+              - column:
+                  name: price
+                  valueNumeric: 25.50
+              - column:
+                  name: description
+                  value: "An in-depth look at ancient civilizations."
+              - column:
+                  name: cover_image
+                  value: "http://example.com/images/ancient_civilizations.jpg"
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  value: 3
+              - column:
+                  name: title
+                  value: "The Art of Renaissance"
+              - column:
+                  name: author
+                  value: "Leonardo da Vinci"
+              - column:
+                  name: isbn
+                  value: "978-0-7432-7350-5"
+              - column:
+                  name: price
+                  valueNumeric: 40.00
+              - column:
+                  name: description
+                  value: "A comprehensive guide to Renaissance art."
+              - column:
+                  name: cover_image
+                  value: "http://example.com/images/renaissance_art.jpg"
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  value: 4
+              - column:
+                  name: title
+                  value: "Modern Science Explained"
+              - column:
+                  name: author
+                  value: "Albert Einstein"
+              - column:
+                  name: isbn
+                  value: "978-1-56619-909-4"
+              - column:
+                  name: price
+                  valueNumeric: 35.75
+              - column:
+                  name: description
+                  value: "An easy-to-understand explanation of modern science."
+              - column:
+                  name: cover_image
+                  value: "http://example.com/images/modern_science.jpg"
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  value: 5
+              - column:
+                  name: title
+                  value: "Political Theory and Practice"
+              - column:
+                  name: author
+                  value: "Karl Marx"
+              - column:
+                  name: isbn
+                  value: "978-0-14-044910-5"
+              - column:
+                  name: price
+                  valueNumeric: 18.90
+              - column:
+                  name: description
+                  value: "A critical analysis of political theory and practice."
+              - column:
+                  name: cover_image
+                  value: "http://example.com/images/political_theory.jpg"
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  value: 6
+              - column:
+                  name: title
+                  value: "Fantasy World Chronicles"
+              - column:
+                  name: author
+                  value: "J.R.R. Tolkien"
+              - column:
+                  name: isbn
+                  value: "978-0-261-10236-2"
+              - column:
+                  name: price
+                  valueNumeric: 29.99
+              - column:
+                  name: description
+                  value: "An epic journey through a fantastical world."
+              - column:
+                  name: cover_image
+                  value: "http://example.com/images/fantasy_world.jpg"
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  value: 7
+              - column:
+                  name: title
+                  value: "Young Heroes of Tomorrow"
+              - column:
+                  name: author
+                  value: "Suzanne Collins"
+              - column:
+                  name: isbn
+                  value: "978-0-439-02348-1"
+              - column:
+                  name: price
+                  valueNumeric: 15.99
+              - column:
+                  name: description
+                  value: "A tale of young heroes rising against adversity."
+              - column:
+                  name: cover_image
+                  value: "http://example.com/images/young_heroes.jpg"
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  value: 8
+              - column:
+                  name: title
+                  value: "Classic Tales Retold"
+              - column:
+                  name: author
+                  value: "Mark Twain"
+              - column:
+                  name: isbn
+                  value: "978-0-452-28423-4"
+              - column:
+                  name: price
+                  valueNumeric: 12.50
+              - column:
+                  name: description
+                  value: "Classic literature retold for modern audiences."
+              - column:
+                  name: cover_image
+                  value: "http://example.com/images/classic_tales.jpg"
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  value: 9
+              - column:
+                  name: title
+                  value: "Cultural Evolution"
+              - column:
+                  name: author
+                  value: "Clifford Geertz"
+              - column:
+                  name: isbn
+                  value: "978-0-19-503313-6"
+              - column:
+                  name: price
+                  valueNumeric: 27.99
+              - column:
+                  name: description
+                  value: "The evolution of culture through the ages."
+              - column:
+                  name: cover_image
+                  value: "http://example.com/images/cultural_evolution.jpg"
+
+        - insert:
+            tableName: books
+            columns:
+              - column:
+                  name: id
+                  value: 10
+              - column:
+                  name: title
+                  value: "Scientific Discoveries of the 21st Century"
+              - column:
+                  name: author
+                  value: "Stephen Hawking"
+              - column:
+                  name: isbn
+                  value: "978-0-553-10953-5"
+              - column:
+                  name: price
+                  valueNumeric: 33.25
+              - column:
+                  name: description
+                  value: "Groundbreaking scientific discoveries of the current century."
+              - column:
+                  name: cover_image
+                  value: "http://example.com/images/scientific_discoveries.jpg"

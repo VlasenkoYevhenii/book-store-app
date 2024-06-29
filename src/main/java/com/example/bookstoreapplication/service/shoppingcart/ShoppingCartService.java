@@ -1,19 +1,22 @@
 package com.example.bookstoreapplication.service.shoppingcart;
 
 import com.example.bookstoreapplication.dto.cartitem.CartItemRequestDto;
-import com.example.bookstoreapplication.dto.cartitem.CartItemUpdateDto;
+import com.example.bookstoreapplication.dto.shoppingcart.ShoppingCartRequestDto;
 import com.example.bookstoreapplication.dto.shoppingcart.ShoppingCartResponseDto;
+import com.example.bookstoreapplication.model.ShoppingCart;
 import com.example.bookstoreapplication.model.User;
 
 public interface ShoppingCartService {
-    ShoppingCartResponseDto getByUserId(Long userId);
+    ShoppingCartResponseDto createShoppingCart(User user);
 
-    ShoppingCartResponseDto addBookToCart(Long userId, CartItemRequestDto requestDto);
+    ShoppingCartResponseDto getShoppingCartDto(Long userId);
 
-    ShoppingCartResponseDto updateBookQuantityById(Long cartItemId, Long userId,
-                                                   CartItemUpdateDto updateDto);
+    ShoppingCartResponseDto clearShoppingCart(ShoppingCart shoppingCart);
 
-    void removeItemFromCart(Long userId, Long cartItemId);
+    ShoppingCartResponseDto updateQuantityById(User user,
+                                               Long cartItemId,
+                                               ShoppingCartRequestDto requestDto);
 
-    void createNewShoppingCart(User user);
+    ShoppingCartResponseDto addBookToShoppingCart(User user,
+                                                  CartItemRequestDto cartItemRequestDto);
 }
