@@ -33,6 +33,7 @@ public class BookController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "List all books",
                 description = "Returns a list of all books(uses pagination)")
+    @ResponseStatus(HttpStatus.OK)
     public List<BookDto> getAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
@@ -47,6 +48,7 @@ public class BookController {
     @PostMapping
     @Operation(summary = "Add a new book to DB", description = "Adds a book to DB")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
     public BookDto createBook(@Valid @RequestBody CreateBookRequestDto dto) {
         return bookService.save(dto);
     }

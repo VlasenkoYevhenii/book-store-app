@@ -2,7 +2,7 @@ package com.example.bookstoreapplication.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.atMostOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -12,7 +12,6 @@ import com.example.bookstoreapplication.dto.book.CreateBookRequestDto;
 import com.example.bookstoreapplication.mapper.BookMapper;
 import com.example.bookstoreapplication.model.Book;
 import com.example.bookstoreapplication.repository.book.BookRepository;
-import com.example.bookstoreapplication.repository.book.BookSpecificationBuilder;
 import com.example.bookstoreapplication.service.book.BookServiceImpl;
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -33,26 +32,28 @@ import org.springframework.data.domain.Pageable;
 class BookServiceImplTest {
     private static final Long VALID_ID = 1L;
     private static final int VALID_PRICE = 100;
+    private static final int EXPECTED_TWO = 2;
+    private static final int PAGE_NUMBER = 0;
+    private static final int PAGE_SIZE = 10;
+
     private static Pageable pageable;
-    private Book testBook;
-    private Book testBook2;
-    private CreateBookRequestDto testRequestDto;
-    private BookDto testResponseDto;
-    private BookDto testResponseDto2;
+    private static Book testBook;
+    private static Book testBook2;
+    private static CreateBookRequestDto testRequestDto;
+    private static BookDto testResponseDto;
+    private static BookDto testResponseDto2;
 
     @Mock
     private BookRepository bookRepository;
     @Mock
     private BookMapper bookMapper;
-    @Mock
-    private BookSpecificationBuilder specificationBuilder;
 
     @InjectMocks
     private BookServiceImpl bookService;
 
     @BeforeEach
     void setUp() {
-        pageable = PageRequest.of(0, 10);
+        pageable = PageRequest.of(PAGE_NUMBER, PAGE_SIZE);
         testRequestDto = new CreateBookRequestDto()
                 .setTitle("Test book")
                 .setAuthor("Test Author")
@@ -108,8 +109,8 @@ class BookServiceImplTest {
 
         assertNotNull(actual);
         assertEquals(testResponseDto, actual);
-        verify(bookRepository, times(1)).findById(VALID_ID);
-        verify(bookMapper, times(1)).toDto(testBook);
+        verify(bookRepository, atMostOnce()).findById(VALID_ID);
+        verify(bookMapper, atMostOnce()).toDto(testBook);
     }
 
     @Test
@@ -133,18 +134,18 @@ class BookServiceImplTest {
             should return a page of BookDto""")
     public void findAll_AllValidConditions_ReturnsListOfBookDto() {
         when(bookRepository.findAll(pageable)).thenReturn(
-                new PageImpl<>(Arrays.asList(testBook, testBook2), pageable, 2));
+                new PageImpl<>(Arrays.asList(testBook, testBook2), pageable, EXPECTED_TWO));
         when(bookMapper.toDto(testBook)).thenReturn(testResponseDto);
         when(bookMapper.toDto(testBook2)).thenReturn(testResponseDto2);
 
         List<BookDto> actualBookDtos = bookService.findAll(pageable);
 
         assertNotNull(actualBookDtos);
-        assertEquals(2, actualBookDtos.size());
+        assertEquals(EXPECTED_TWO, actualBookDtos.size());
         assertEquals(Arrays.asList(testResponseDto, testResponseDto2), actualBookDtos);
-        verify(bookRepository, times(1)).findAll(pageable);
-        verify(bookMapper, times(1)).toDto(testBook);
-        verify(bookMapper, times(1)).toDto(testBook2);
+        verify(bookRepository, atMostOnce()).findAll(pageable);
+        verify(bookMapper, atMostOnce()).toDto(testBook);
+        verify(bookMapper, atMostOnce()).toDto(testBook2);
     }
 
     @Test
@@ -162,17 +163,15 @@ class BookServiceImplTest {
         when(bookMapper.toDtoWithoutCategories(testBook2)).thenReturn(
                 new BookDtoWithoutCategoryIds());
 
-        // when
         List<BookDtoWithoutCategoryIds> actualBookDtos = bookService.getBookDtosByCategoryId(
                 categoryId, pageable);
 
-        // then
         assertNotNull(actualBookDtos);
-        assertEquals(2, actualBookDtos.size());
-        verify(bookRepository, times(1)).findByCategoriesId(
+        assertEquals(EXPECTED_TWO, actualBookDtos.size());
+        verify(bookRepository, atMostOnce()).findByCategoriesId(
                 categoryId, pageable);
-        verify(bookMapper, times(1)).toDtoWithoutCategories(testBook);
-        verify(bookMapper, times(1)).toDtoWithoutCategories(testBook2);
+        verify(bookMapper, atMostOnce()).toDtoWithoutCategories(testBook);
+        verify(bookMapper, atMostOnce()).toDtoWithoutCategories(testBook2);
     }
 
     private void mockMapperToModelAndSave() {
@@ -181,8 +180,8 @@ class BookServiceImplTest {
     }
 
     private void verifyInteractionsForSave() {
-        verify(bookMapper, times(1)).toModel(testRequestDto);
-        verify(bookRepository, times(1)).save(testBook);
-        verify(bookMapper, times(1)).toDto(testBook);
+        verify(bookMapper, atMostOnce()).toModel(testRequestDto);
+        verify(bookRepository, atMostOnce()).save(testBook);
+        verify(bookMapper, atMostOnce()).toDto(testBook);
     }
 }

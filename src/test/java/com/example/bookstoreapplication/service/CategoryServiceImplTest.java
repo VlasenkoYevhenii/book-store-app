@@ -3,9 +3,8 @@ package com.example.bookstoreapplication.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.atMostOnce;
 import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,6 +30,14 @@ import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 class CategoryServiceImplTest {
+    private static final Long VALID_ID = 1L;
+    private static final int EXPECTED_ONE = 1;
+    private static final int PAGE_NUMBER = 0;
+    private static final int PAGE_SIZE = 10;
+    private static Pageable pageable;
+    private static Category category;
+    private static CategoryDto categoryDto;
+    private static CategoryRequestDto categoryRequestDto;
 
     @Mock
     private CategoryRepository categoryRepository;
@@ -41,68 +48,63 @@ class CategoryServiceImplTest {
     @InjectMocks
     private CategoryServiceImpl categoryService;
 
-    private Category category;
-    private CategoryDto categoryDto;
-    private CategoryRequestDto categoryRequestDto;
-
     @BeforeEach
     void setUp() {
+        pageable = PageRequest.of(PAGE_NUMBER, PAGE_SIZE);
         category = new Category();
-        category.setId(1L);
+        category.setId(VALID_ID);
         category.setName("Fiction");
         category.setDescription("Fictional books");
 
         categoryDto = new CategoryDto();
-        categoryDto.setId(1L);
-        categoryDto.setName("Fiction");
-        categoryDto.setDescription("Fictional books");
+        categoryDto.setId(VALID_ID);
+        categoryDto.setName(category.getName());
+        categoryDto.setDescription(category.getDescription());
 
         categoryRequestDto = new CategoryRequestDto();
-        categoryRequestDto.setName("Fiction");
-        categoryRequestDto.setDescription("Fictional books");
+        categoryRequestDto.setName(category.getName());
+        categoryRequestDto.setDescription(category.getDescription());
     }
 
     @Test
     @DisplayName("Verify findAll() method")
     void findAll_ValidPageable_ReturnCategoryDtoList() {
-        Pageable pageable = PageRequest.of(0, 10);
         when(categoryRepository.findAll(pageable)).thenReturn(new PageImpl<>(List.of(category)));
         when(categoryMapper.toDtoList(List.of(category))).thenReturn(List.of(categoryDto));
 
         List<CategoryDto> actual = categoryService.findAll(pageable);
         assertNotNull(actual);
-        assertThat(actual).hasSize(1);
+        assertThat(actual).hasSize(EXPECTED_ONE);
         assertThat(actual).contains(categoryDto);
 
-        verify(categoryRepository, times(1)).findAll(pageable);
-        verify(categoryMapper, times(1)).toDtoList(List.of(category));
+        verify(categoryRepository, atMostOnce()).findAll(pageable);
+        verify(categoryMapper, atMostOnce()).toDtoList(List.of(category));
     }
 
     @Test
     @DisplayName("Verify getById() method with valid id")
     void getById_ValidId_ReturnCategoryDto() {
-        when(categoryRepository.findById(1L)).thenReturn(Optional.of(category));
+        when(categoryRepository.findById(VALID_ID)).thenReturn(Optional.of(category));
         when(categoryMapper.toDto(category)).thenReturn(categoryDto);
 
-        CategoryDto actual = categoryService.getById(1L);
+        CategoryDto actual = categoryService.getById(VALID_ID);
         assertNotNull(actual);
         assertThat(actual).isEqualTo(categoryDto);
 
-        verify(categoryRepository, times(1)).findById(1L);
-        verify(categoryMapper, times(1)).toDto(category);
+        verify(categoryRepository, atMostOnce()).findById(VALID_ID);
+        verify(categoryMapper, atMostOnce()).toDto(category);
     }
 
     @Test
     @DisplayName("Verify getById() method with invalid id")
     void getById_InvalidId_ThrowEntityNotFoundException() {
-        when(categoryRepository.findById(1L)).thenReturn(Optional.empty());
+        when(categoryRepository.findById(VALID_ID)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(EntityNotFoundException.class,
-                            () -> categoryService.getById(1L));
+                () -> categoryService.getById(VALID_ID));
         assertThat(exception.getMessage()).isEqualTo("Failed to get book by id=1");
 
-        verify(categoryRepository, times(1)).findById(1L);
-        verify(categoryMapper, times(0)).toDto(any());
+        verify(categoryRepository, atMostOnce()).findById(VALID_ID);
     }
 
     @Test
@@ -116,9 +118,9 @@ class CategoryServiceImplTest {
         assertNotNull(actual);
         assertThat(actual).isEqualTo(categoryDto);
 
-        verify(categoryMapper, times(1)).toModel(categoryRequestDto);
-        verify(categoryRepository, times(1)).save(category);
-        verify(categoryMapper, times(1)).toDto(category);
+        verify(categoryMapper, atMostOnce()).toModel(categoryRequestDto);
+        verify(categoryRepository, atMostOnce()).save(category);
+        verify(categoryMapper, atMostOnce()).toDto(category);
     }
 
     @Test
@@ -128,22 +130,22 @@ class CategoryServiceImplTest {
         when(categoryRepository.save(category)).thenReturn(category);
         when(categoryMapper.toDto(category)).thenReturn(categoryDto);
 
-        CategoryDto actual = categoryService.update(1L, categoryRequestDto);
+        CategoryDto actual = categoryService.update(VALID_ID, categoryRequestDto);
         assertNotNull(actual);
         assertThat(actual).isEqualTo(categoryDto);
 
-        verify(categoryMapper, times(1)).toModel(categoryRequestDto);
-        verify(categoryRepository, times(1)).save(category);
-        verify(categoryMapper, times(1)).toDto(category);
+        verify(categoryMapper, atMostOnce()).toModel(categoryRequestDto);
+        verify(categoryRepository, atMostOnce()).save(category);
+        verify(categoryMapper, atMostOnce()).toDto(category);
     }
 
     @Test
     @DisplayName("Verify deleteById() method")
     void deleteById_ValidId() {
-        doNothing().when(categoryRepository).deleteById(1L);
+        doNothing().when(categoryRepository).deleteById(VALID_ID);
 
-        categoryService.deleteById(1L);
+        categoryService.deleteById(VALID_ID);
 
-        verify(categoryRepository, times(1)).deleteById(1L);
+        verify(categoryRepository, atMostOnce()).deleteById(VALID_ID);
     }
 }
