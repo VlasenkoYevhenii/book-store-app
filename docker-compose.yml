@@ -9,8 +9,12 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - ${MYSQL_DOCKER_PORT}:${MYSQL_LOCAL_PORT}
-    volumes:
-      - mysql_data:/var/lib/mysql
+
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
 
   app:
     build:
@@ -28,8 +32,6 @@ services:
       - ${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}
       - ${DEBUG_PORT}:${DEBUG_PORT}
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     restart: always
-
-volumes:
-  mysql_data:

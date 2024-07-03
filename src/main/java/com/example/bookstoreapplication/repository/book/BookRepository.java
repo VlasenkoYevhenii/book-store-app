@@ -29,5 +29,5 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
             + "LEFT JOIN books_categories ON books.id = books_categories.book_id "
             + "WHERE books_categories.category_id = :id",
             nativeQuery = true)
-    List<Book> findByCategoriesId(Long id, Pageable pageable);
+    Page<Book> findByCategoriesId(Long id, Pageable pageable);
 }

@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/categories")
+@RequestMapping("/api/categories")
 @Tag(name = "Categories", description = "Category management")
 public class CategoryController {
     private final CategoryService categoryService;
@@ -33,7 +33,8 @@ public class CategoryController {
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Create category",
-                description = "Add new category to the DB(ADMIN only)")
+            description = "Add new category to the DB(ADMIN only)")
+    @ResponseStatus(HttpStatus.CREATED)
     public CategoryDto createCategory(@RequestBody CategoryRequestDto dto) {
         return categoryService.save(dto);
     }
@@ -41,7 +42,7 @@ public class CategoryController {
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "Get all categories",
-                description = "Retrieves all the categories from the DB")
+            description = "Retrieves all the categories from the DB")
     public List<CategoryDto> getAll(Pageable pageable) {
         return categoryService.findAll(pageable);
     }
@@ -49,7 +50,7 @@ public class CategoryController {
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "Get category by id",
-                description = "Retrieves a category by id from the DB")
+            description = "Retrieves a category by id from the DB")
     public CategoryDto getCategoryById(@PathVariable Long id) {
         return categoryService.getById(id);
     }
@@ -57,7 +58,7 @@ public class CategoryController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Operation(summary = "Update category",
-                description = "Updates category by its id(ADMIN only)")
+            description = "Updates category by its id(ADMIN only)")
     public CategoryDto updateCategory(@PathVariable Long id, @RequestBody CategoryRequestDto dto) {
         return categoryService.update(id, dto);
     }
@@ -66,7 +67,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete category",
-                description = "Deletes category by its id from the DB (ADMIN only)")
+            description = "Deletes category by its id from the DB (ADMIN only)")
     public void deleteCategory(@PathVariable Long id) {
         categoryService.deleteById(id);
     }
@@ -74,7 +75,7 @@ public class CategoryController {
     @GetMapping("/{id}/books")
     @PreAuthorize("hasRole('ROLE_USER')")
     @Operation(summary = "Get books by category id",
-                description = "Retrieves all books by category id")
+            description = "Retrieves all books by category id")
     public List<BookDtoWithoutCategoryIds> getBooksByCategoryId(@PathVariable Long id,
                                                                 Pageable pageable) {
         return bookService.getBookDtosByCategoryId(id, pageable);

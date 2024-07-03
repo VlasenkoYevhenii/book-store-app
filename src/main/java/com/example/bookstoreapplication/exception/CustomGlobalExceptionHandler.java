@@ -82,6 +82,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         body.put(TIMESTAMP, LocalDateTime.now());
         body.put(STATUS, HttpStatus.INTERNAL_SERVER_ERROR);
         body.put(MESSAGE, ex.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
